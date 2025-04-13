@@ -1,0 +1,147 @@
+.mapContainer {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  background-color: #2b323c;
+}
+
+.gameMap {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  grid-gap: 2px;
+  padding: 10px;
+  background: linear-gradient(135deg, #1c242e 0%, #2d3748 100%);
+}
+
+.mapTile {
+  aspect-ratio: 1;
+  position: relative;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.mapTile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+/* TERRAIN TYPES */
+.grass {
+  background: linear-gradient(135deg, #2c784c 0%, #38a169 100%);
+  box-shadow: inset 0 0 10px rgba(40, 100, 70, 0.4);
+}
+
+.water {
+  background: linear-gradient(135deg, #2c5082 0%, #3182ce 100%);
+  box-shadow: inset 0 0 10px rgba(40, 80, 130, 0.4);
+}
+
+.forest {
+  background: linear-gradient(135deg, #22543d 0%, #276749 100%);
+  box-shadow: inset 0 0 10px rgba(30, 70, 50, 0.4);
+}
+
+.mountain {
+  background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
+  box-shadow: inset 0 0 10px rgba(100, 110, 130, 0.4);
+}
+
+.desert {
+  background: linear-gradient(135deg, #d69e2e 0%, #ecc94b 100%);
+  box-shadow: inset 0 0 10px rgba(210, 160, 70, 0.4);
+}
+
+.occupied {
+  position: relative;
+}
+
+.occupied::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  z-index: 1;
+}
+
+/* Add subtle patterns to terrain for more texture */
+.grass::before,
+.forest::before,
+.mountain::before,
+.desert::before,
+.water::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.2;
+  background-size: 10px 10px;
+  background-repeat: repeat;
+}
+
+.grass::before {
+  background-image: radial-gradient(circle, transparent 70%, rgba(0, 0, 0, 0.1) 70%);
+}
+
+.water::before {
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%), 
+                    linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%);
+  animation: waterRipple 8s linear infinite;
+}
+
+.forest::before {
+  background-image: radial-gradient(circle at 30% 70%, rgba(0, 0, 0, 0.2) 5%, transparent 5%),
+                    radial-gradient(circle at 70% 30%, rgba(0, 0, 0, 0.2) 5%, transparent 5%);
+}
+
+.mountain::before {
+  background-image: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
+}
+
+.desert::before {
+  background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 4px);
+}
+
+@keyframes waterRipple {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
+}
+
+/* Fog of war effect for unexplored areas */
+.unexplored {
+  filter: brightness(0.4) grayscale(0.7);
+}
+
+/* Highlight effect for selected tiles */
+.selected {
+  box-shadow: 0 0 0 2px #f6ad55, 0 0 10px #ed8936;
+  z-index: 3;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 2px rgba(246, 173, 85, 0.7), 0 0 10px rgba(237, 137, 54, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(246, 173, 85, 0.9), 0 0 15px rgba(237, 137, 54, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(246, 173, 85, 0.7), 0 0 10px rgba(237, 137, 54, 0.7);
+  }
+}
