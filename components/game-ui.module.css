@@ -1,0 +1,24 @@
+.gameUI {
+  background-color: #374151;
+  padding: 0.05rem 0.5rem;
+  color: rgb(0, 0, 0);
+  max-width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(253, 253, 253, 0.947);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  
+}
+
+.gameUIInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import GameUI from "@/components/game-ui"
 import { GameEngine } from "@/lib/game-engine"
 import { Button } from "@/components/ui/button"
+import styles from "./page.module.css"
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -72,17 +73,14 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-900 p-4">
+    <main className={`${styles.main}`}>
       {!gameStarted ? (
-        <div className="flex flex-col items-center justify-center space-y-6 text-center">
-          <h1 className="text-4xl font-bold text-amber-500">New Haven Colony</h1>
-          <p className="max-w-md text-gray-300">
-            Guide your pioneers as they establish a thriving colony on an untamed planet. Gather resources, build
-            structures, and ensure the survival of your settlers.
+        <div className={`${styles.startScreen}`}>
+          <h1 className={`${styles.title}`}>New Haven Colony</h1>
+          <p className={`${styles.subtitle}`}>
+            Build and manage your colony to survive and thrive.
           </p>
-          <Button onClick={startGame} className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 text-lg">
-            Start New Colony
-          </Button>
+          <Button onClick={startGame}>Start Game</Button>
         </div>
       ) : (
         <div className="w-full h-full flex flex-col">
