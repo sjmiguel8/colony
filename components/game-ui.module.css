@@ -21,4 +21,36 @@
   
 }
 
+.gameUIContainer {
+  background-color: #2D3748; /* Darker background */
+  padding: 0.5rem 1rem;
+  color: #000000c6; /* Lighter text color */
+  max-width: 100%;
+  border-radius: 0.75rem; /* Slightly larger border radius */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+  font-size: 1.1rem;
+  font-weight: 500; /* Medium font weight */
+}
+
+.gameUIContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.statItem {
+  background-color: #4A5568; /* Slightly lighter background for stat items */
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  color: #CBD5E0;
+}
+
+.statItem span {
+  font-weight: 600; /* Slightly bolder font for stat values */
+}
+
 

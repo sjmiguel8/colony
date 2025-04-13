@@ -21,8 +21,8 @@ interface GameUIProps {
 
 export default function GameUI({ stats, onAddColonist, onBuildHouse, onBuildFarm, onBuildMine }: GameUIProps) {
   return (
-    <div className={styles.gameUI}>
-      <div className={styles.gameUIInner}>
+    <div className={styles.gameUIContainer}>
+      <div className={styles.gameUIContent}>
         <div className="flex space-x-4">
           <div className={`${styles.statItem} flex items-center space-x-1`}>
             <Users size={18} className="text-blue-400" />
