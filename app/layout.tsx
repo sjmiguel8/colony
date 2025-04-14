@@ -23,7 +23,7 @@ export default function RootLayout({
             </header>
             <main className="flex-grow bg-gray-900 p-4">
               <div className="container mx-auto">
-                <div className="flex flex-col items-center justify-center min-h-screen">
+                <div className="canvas" style={{ position: "relative", width: "100%", height: "100%" }}>
                   {children}
                 </div>
               </div>

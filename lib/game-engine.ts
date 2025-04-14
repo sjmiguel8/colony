@@ -5,24 +5,36 @@ import { generateWorld } from "./world-generator"
 
 export class GameEngine {
   canvas: HTMLCanvasElement
-  ctx: CanvasRenderingContext2D
-  world: Biome[][]
-  colonists: Colonist[]
-  buildings: Building[]
-  resources: { food: number; wood: number; stone: number }
-  tileSize: number
-  animationFrameId: number
-  lastTimestamp: number
-  selectedTile: { x: number; y: number } | null
+  ctx!: CanvasRenderingContext2D
+  world!: Biome[][]
+  colonists!: Colonist[]
+  buildings!: Building[]
+  resources!: { food: number; wood: number; stone: number }
+  tileSize!: number
+  animationFrameId!: number
+  lastTimestamp!: number
+  selectedTile!: { x: number; y: number } | null
 
-  constructor(canvas: HTMLCanvasElement) {
-    this.canvas = canvas
-    this.ctx = canvas.getContext("2d")!
-    this.resizeCanvas()
+  constructor(canvasId: string) {
+    this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+    if (!this.canvas) {
+      console.error('Canvas element not found!');
+      return;
+    }
+
+    this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+
+    if (!this.ctx) {
+      console.error('Canvas context not supported!');
+      return;
+    }
+
+    this.resizeCanvas(); // Initial resize
+    window.addEventListener('resize', this.resizeCanvas.bind(this));
 
     // Initialize game state
     this.tileSize = 64
-    this.world = generateWorld(100, 100)
+    this.world = generateWorld(40, 40)
     this.colonists = []
     this.buildings = []
     this.resources = { food: 50, wood: 50, stone: 20 }
@@ -45,24 +57,49 @@ export class GameEngine {
   }
 
   resizeCanvas() {
-    this.canvas.width = this.canvas.clientWidth
-    this.canvas.height = this.canvas.clientHeight
+    if (!this.ctx || !this.canvas) return; // Ensure ctx and canvas are valid
+
+    const container = this.canvas.parentElement;
+    if (container) {
+      // Set canvas dimensions to match container size while maintaining aspect ratio
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+      
+      this.canvas.width = containerWidth;
+      this.canvas.height = containerHeight;
+      
+      // Scale rendering context to match world size
+    } else {
+      // Fallback if no parent element
+      this.canvas.width = this.canvas.clientWidth;
+      this.canvas.height = this.canvas.clientHeight;
+    }
+
+    // Additional checks to prevent errors during context usage
+    this.ctx.imageSmoothingEnabled = false;
+    (this.ctx as any).mozImageSmoothingEnabled = false;
   }
 
   setupEventListeners() {
     this.canvas.addEventListener("click", (e) => {
-      const rect = this.canvas.getBoundingClientRect()
-      const x = Math.floor((e.clientX - rect.left) / this.tileSize)
-      const y = Math.floor((e.clientY - rect.top) / this.tileSize)
+      const rect = this.canvas.getBoundingClientRect();
+      const scaleX = this.canvas.width / (this.world[0].length * this.tileSize);
+      const scaleY = this.canvas.height / (this.world.length * this.tileSize);
+      
+      // Adjust click coordinates based on scale
+      const x = Math.floor((e.clientX - rect.left) / (this.tileSize * scaleX));
+      const y = Math.floor((e.clientY - rect.top) / (this.tileSize * scaleY));
 
       if (x >= 0 && x < this.world[0].length && y >= 0 && y < this.world.length) {
-        this.selectedTile = { x, y }
+        this.selectedTile = { x, y };
       }
-    })
+    });
 
+    // Add resize event listener to window
     window.addEventListener("resize", () => {
-      this.resizeCanvas()
-    })
+      this.resizeCanvas();
+      this.render(); // Re-render after resize
+    });
   }
 
   start() {
@@ -96,8 +133,19 @@ export class GameEngine {
   }
 
   render() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.ctx.save(); // Save context state
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    // Scale context to fit the current canvas size
+    const scaleX = this.canvas.width / (this.world[0].length * this.tileSize);
+    const scaleY = this.canvas.height / (this.world.length * this.tileSize);
+    
+    // Reset any previous transformations
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    // Apply new scale
+    this.ctx.scale(scaleX, scaleY);
+    
+    // Continue with existing rendering code
     // Render world
     for (let y = 0; y < this.world.length; y++) {
       for (let x = 0; x < this.world[y].length; x++) {
@@ -192,6 +240,8 @@ export class GameEngine {
         this.tileSize,
       )
     }
+
+    this.ctx.restore(); // Restore context state
   }
 
   addColonist() {
@@ -201,11 +251,15 @@ export class GameEngine {
       // Find a valid spawn position
       const centerX = Math.floor(this.world[0].length / 2)
       const centerY = Math.floor(this.world.length / 2)
+      
+      // Safety check to ensure spawn is within bounds
+      const safeX = Math.min(Math.max(0, centerX), this.world[0].length - 1)
+      const safeY = Math.min(Math.max(0, centerY), this.world.length - 1)
 
-      console.log(`Adding colonist at x: ${centerX}, y: ${centerY}`) // ADDED
-      const colonist = new Colonist(centerX, centerY)
+      console.log(`Adding colonist at x: ${safeX}, y: ${safeY}`)
+      const colonist = new Colonist(safeX, safeY)
       this.colonists.push(colonist)
-      return true
+      return colonist
     }
     return false
   }

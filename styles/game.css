@@ -1,0 +1,27 @@
+/* Game Canvas Styles */
+.game-canvas {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  max-height: calc(100vh - 100px); /* Adjust based on your UI height */
+  background-color: #b44444;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  image-rendering: pixelated; /* For pixel-perfect scaling */
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+/* Game UI positioning */
+.game-ui-wrapper {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 1rem;
+}

@@ -1,5 +1,5 @@
 .gameUI {
-  background-color: #374151;
+  background-color: #ffffff;
   padding: 0.05rem 0.5rem;
   color: rgb(0, 0, 0);
   max-width: 100%;
@@ -22,35 +22,46 @@
 }
 
 .gameUIContainer {
-  background-color: #2D3748; /* Darker background */
+  background-color: #2D3748;
   padding: 0.5rem 1rem;
-  color: #000000c6; /* Lighter text color */
+  color: #CBD5E0;
   max-width: 100%;
-  border-radius: 0.75rem; /* Slightly larger border radius */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.1rem;
-  font-weight: 500; /* Medium font weight */
+  font-weight: 500;
 }
 
 .gameUIContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  gap: 1rem;
 }
 
 .statItem {
-  background-color: #4A5568; /* Slightly lighter background for stat items */
+  background-color: #4A5568;
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
   color: #CBD5E0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .statItem span {
-  font-weight: 600; /* Slightly bolder font for stat values */
+  font-weight: 600;
+  margin: 0 0.25rem;
+}
+
+.statIcon {
+  width: 1rem;
+  height: 1rem;
 }
 
 

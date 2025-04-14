@@ -74,3 +74,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.canvas {
+  width: 200px;
+  height: 200px;
+  background-color: #b44444;
+}
+

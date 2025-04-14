@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Users, Wheat, TreesIcon as Tree, Mountain, Home, Building } from "lucide-react"
+import { House, Trees, Mountain, Apple } from "lucide-react"
 import styles from "./game-ui.module.css"
 
 interface GameUIProps {
@@ -25,15 +25,15 @@ export default function GameUI({ stats, onAddColonist, onBuildHouse, onBuildFarm
       <div className={styles.gameUIContent}>
         <div className="flex space-x-4">
           <div className={`${styles.statItem} flex items-center space-x-1`}>
-            <Users size={18} className="text-blue-400" />
+            <House size={18} className="text-blue-400" />
             <span>{stats.colonists}</span>
           </div>
           <div className={`${styles.statItem} flex items-center space-x-1`}>
-            <Wheat size={18} className="text-yellow-400" />
+            <Apple size={18} className="text-yellow-400" />
             <span>{stats.food > 9999 ? '9999+' : stats.food.toFixed(stats.food < 10 ? 2 : stats.food < 100 ? 1 : 0)}</span>
           </div>
           <div className={`${styles.statItem} flex items-center space-x-1`}>
-            <Tree size={18} className="text-green-600" />
+            <Trees size={18} className="text-green-600" />
             <span>{stats.wood > 9999 ? '9999+' : stats.wood.toFixed(stats.wood < 10 ? 2 : stats.wood < 100 ? 1 : 0)}</span>
           </div>
           <div className={`${styles.statItem} flex items-center space-x-1`}>
@@ -41,7 +41,7 @@ export default function GameUI({ stats, onAddColonist, onBuildHouse, onBuildFarm
             <span>{stats.stone > 9999 ? '9999+' : stats.stone.toFixed(stats.stone < 10 ? 2 : stats.stone < 100 ? 1 : 0)}</span>
           </div>
           <div className={`${styles.statItem} flex items-center space-x-1`}>
-            <Building size={18} className="text-amber-400" />
+            <House size={18} className="text-amber-400" />
             <span>{stats.buildings > 9999 ? '9999+' : stats.buildings.toFixed(stats.buildings < 10 ? 2 : stats.buildings < 100 ? 1 : 0)}</span>
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function GameUI({ stats, onAddColonist, onBuildHouse, onBuildFarm
                 className="flex items-center space-x-1 mb-2 max-w-[150px]"
                 disabled={stats.wood < 20}
               >
-                <Home size={16} />
+                <House size={16} />
                 <span>House (20 Wood)</span>
               </Button>
               <Button
@@ -69,7 +69,7 @@ export default function GameUI({ stats, onAddColonist, onBuildHouse, onBuildFarm
                 className="flex items-center space-x-1 mb-2 max-w-[150px]"
                 disabled={stats.wood < 15}
               >
-                <Wheat size={16} />
+                <Apple size={16} />
                 <span>Farm (15 Wood)</span>
               </Button>
               <Button
@@ -91,7 +91,7 @@ export default function GameUI({ stats, onAddColonist, onBuildHouse, onBuildFarm
                 className="flex items-center space-x-1"
                 disabled={stats.food < 10}
               >
-                <Users size={16} />
+                <House size={16} />
                 <span>Add Colonist (10 Food)</span>
               </Button>
               <div className="text-xs text-gray-300">
