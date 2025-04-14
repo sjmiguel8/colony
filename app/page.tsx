@@ -87,6 +87,21 @@ export default function Home() {
     setGameStarted(true)
   }
 
+  const onAddColonist = () => {
+    if (gameEngine) {
+      const result = gameEngine.addColonist();
+      if (result) {
+        console.log('Colonist added successfully');
+        // Optionally update state or trigger a re-render
+      } else {
+        console.log('Failed to add colonist (not enough food?)');
+        // Handle the failure case (e.g., display a message to the user)
+      }
+    } else {
+      console.error('GameEngine not initialized');
+    }
+  };
+
   return (
     <main className={styles.main}>
       {!gameStarted ? (
@@ -98,9 +113,7 @@ export default function Home() {
       ) : (
         <div className="game-container">
           <div className="game-ui-wrapper">
-            <GameUI stats={gameStats} onAddColonist={function (): void {
-                throw new Error("Function not implemented.")
-              } } onBuildHouse={function (): void {
+            <GameUI stats={gameStats} onAddColonist={onAddColonist} onBuildHouse={function (): void {
                 throw new Error("Function not implemented.")
               } } onBuildFarm={function (): void {
                 throw new Error("Function not implemented.")
