@@ -21,16 +21,19 @@ export class GameEngine {
     this.resizeCanvas()
 
     // Initialize game state
-    this.tileSize = 32
-    this.world = generateWorld(50, 50)
+    this.tileSize = 64
+    this.world = generateWorld(100, 100)
     this.colonists = []
     this.buildings = []
     this.resources = { food: 50, wood: 50, stone: 20 }
     this.selectedTile = null
 
     // Add initial colonists
-    this.addColonist()
-    this.addColonist()
+    for (let i = 0; i < 10; i++) {
+      const x = Math.floor(Math.random() * this.world[0].length)
+      const y = Math.floor(Math.random() * this.world.length)
+      this.colonists.push(new Colonist(x, y))
+    }
 
     // Start game loop
     this.lastTimestamp = 0
@@ -106,8 +109,8 @@ export class GameEngine {
         if (biome.resources.wood > 0) {
           this.ctx.fillStyle = "#3E8914"
           this.ctx.fillRect(
-            x * this.tileSize + this.tileSize * 0.25,
-            y * this.tileSize + this.tileSize * 0.25,
+            x * this.tileSize + this.tileSize * 0.75/2,
+            y * this.tileSize + this.tileSize *  0.75/2,
             this.tileSize * 0.5,
             this.tileSize * 0.5,
           )
@@ -158,6 +161,7 @@ export class GameEngine {
 
     // Render colonists
     this.colonists.forEach((colonist) => {
+      console.log(`Rendering colonist at x: ${colonist.x}, y: ${colonist.y}`) // ADDED
       this.ctx.fillStyle = colonist.color
       this.ctx.beginPath()
       this.ctx.arc(
@@ -171,7 +175,7 @@ export class GameEngine {
 
       // Draw colonist status
       if (colonist.currentTask) {
-        this.ctx.fillStyle = "#FFFFFF"
+        this.ctx.fillStyle =rgb(14, 14, 14)
         this.ctx.font = "10px Arial"
         this.ctx.fillText(colonist.currentTask, colonist.x * this.tileSize, colonist.y * this.tileSize - 5)
       }
@@ -198,6 +202,7 @@ export class GameEngine {
       const centerX = Math.floor(this.world[0].length / 2)
       const centerY = Math.floor(this.world.length / 2)
 
+      console.log(`Adding colonist at x: ${centerX}, y: ${centerY}`) // ADDED
       const colonist = new Colonist(centerX, centerY)
       this.colonists.push(colonist)
       return true
@@ -246,3 +251,8 @@ export class GameEngine {
     return false
   }
 }
+
+function rgb(r: number, g: number, b: number): string {
+  return `rgb(${r}, ${g}, ${b})`;
+}
+

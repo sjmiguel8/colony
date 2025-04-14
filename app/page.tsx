@@ -34,8 +34,14 @@ export default function Home() {
         })
       }
 
+      // Initial stats update
+      updateStats()
+      
       // Update stats every second
       const statsInterval = setInterval(updateStats, 1000)
+
+      // Start game rendering
+      engine.start()
 
       return () => {
         clearInterval(statsInterval)
@@ -50,7 +56,17 @@ export default function Home() {
 
   const handleAddColonist = () => {
     if (gameEngine) {
-      gameEngine.addColonist()
+      const colonist = gameEngine.addColonist();
+      
+      // Force an immediate stats update
+      setGameStats((prevStats) => ({
+        ...prevStats,
+        colonists: gameEngine.colonists.length,
+      }))
+      
+      // Log to verify colonist was added
+      console.log("Colonist added:", colonist);
+      console.log("Total colonists:", gameEngine.colonists.length);
     }
   }
 
